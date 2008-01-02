@@ -16,6 +16,7 @@ This plugin lets you use raw HTML or any other code in your posts. Wrap a part o
 To prevent a part of your post or page from being filtered by WordPress, wrap it in `<!--start_raw-->...<!--end_raw-->` or `[RAW]...[/RAW]` tags. These two versions work exactly the same, but the latter may be handy if you're using the visual editor (not recommended).
 
 *Example :*
+
 `<!--start_raw-->
 This 
 

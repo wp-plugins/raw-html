@@ -17,8 +17,7 @@ To prevent a part of your post or page from being filtered by WordPress, wrap it
 
 *Example :*
 
-`<!--start_raw-->
-This 
+`<!--start_raw-->This 
 
 is 
 

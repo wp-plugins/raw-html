@@ -3,7 +3,7 @@
 Plugin Name: Raw HTML capability
 Plugin URI: http://w-shadow.com/blog/2007/12/13/raw-html-in-wordpress/
 Description: Lets you enter raw HTML in your posts. See website for details.
-Version: 1.0.2
+Version: 1.0.3
 Author: Janis Elsts
 Author URI: http://w-shadow.com/blog/
 */

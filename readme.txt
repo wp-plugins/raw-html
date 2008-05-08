@@ -2,8 +2,8 @@
 Contributors: whiteshadow
 Tags: posts, formatting, javascript, html, css, code
 Requires at least: 2.2
-Tested up to: 2.3.2
-Stable tag: 1.0.2
+Tested up to: 2.5.1
+Stable tag: 1.0.3
 
 Lets you use raw HTML or any other code in your posts. 
 
@@ -16,8 +16,8 @@ This plugin lets you use raw HTML or any other code in your posts. Wrap a part o
 To prevent a part of your post or page from being filtered by WordPress, wrap it in `<!--start_raw-->...<!--end_raw-->` or `[RAW]...[/RAW]` tags. These two versions work exactly the same, but the latter may be handy if you're using the visual editor (not recommended).
 
 *Example :*
-
-`<!--start_raw-->This 
+`<!--start_raw-->
+This 
 
 is 
 

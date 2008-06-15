@@ -3,7 +3,7 @@ Contributors: whiteshadow
 Tags: posts, formatting, javascript, html, css, code
 Requires at least: 2.2
 Tested up to: 2.5.1
-Stable tag: 1.0.3
+Stable tag: 1.0.4
 
 Lets you use raw HTML or any other code in your posts. 
 

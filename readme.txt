@@ -2,14 +2,21 @@
 Contributors: whiteshadow
 Tags: posts, formatting, javascript, html, css, code
 Requires at least: 2.2
-Tested up to: 2.6.2
-Stable tag: 1.0.5
+Tested up to: 2.7
+Stable tag: 1.1
 
-Lets you use raw HTML or any other code in your posts. 
+Lets you use raw HTML or any other code in your posts. You can also disable smart quotes and other automatic formatting on a per-post basis.
 
 == Description ==
 
-This plugin lets you use raw HTML or any other code in your posts. Wrap a part of your post in special tags (below) to prevent WordPress from converting newlines to HTML paragraphs, escaping apostrophes and so on. Very useful if you need to add a CSS block or JavaScript to your post.
+This plugin lets you use raw HTML or any other code in your posts. One way to use it is to wrap a part of your post in special tags (below) to prevent WordPress from converting newlines to HTML paragraphs, escaping apostrophes and so on. This is very useful if you need to add a CSS block or JavaScript to your post.
+
+RawHTML will also add some new checkboxes to the "Write" screen that will let you disable certain WP filters on a per-post basis. This way you can : 
+
+* Disable wptexturize (this filter creates smart quotes and other typographic characters).
+* Disable automatic paragraph creation.
+* Disable image smilies. 
+* Disable convert_chars (this filter converts ampersands to HTML entities and "fixes" some Unicode characters).
 
 **Using the plugin**
 

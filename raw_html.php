@@ -3,7 +3,7 @@
 Plugin Name: Raw HTML capability
 Plugin URI: http://w-shadow.com/blog/2007/12/13/raw-html-in-wordpress/
 Description: Lets you enter raw HTML in your posts. You can also enable/disable smart quotes and other automatic formatting on a per-post basis.
-Version: 1.2
+Version: 1.2.1
 Author: Janis Elsts
 Author URI: http://w-shadow.com/blog/
 */
@@ -42,7 +42,7 @@ function wsh_insert_exclusions($text){
 	return preg_replace_callback("/!RAWBLOCK(\d+)!/Uis", "wsh_insertion_callback", $text);		
 }
 
-add_filter('the_content', 'wsh_extract_exclusions', 0);
+add_filter('the_content', 'wsh_extract_exclusions', 2);
 add_filter('the_content', 'wsh_insert_exclusions', 1001);
 
 /*****************************************************
@@ -87,14 +87,14 @@ remove_filter('the_excerpt', 'convert_chars');
 remove_filter('the_excerpt', 'convert_smilies');
 
 // add our conditional filters
-add_filter('the_content', 'maybe_wptexturize', 1);
-add_filter('the_content', 'maybe_wpautop', 1);
-add_filter('the_content', 'maybe_convert_chars', 1);
-add_filter('the_content', 'maybe_convert_smilies', 1);
-add_filter('the_excerpt', 'maybe_wptexturize', 1);
-add_filter('the_excerpt', 'maybe_wpautop', 1);
-add_filter('the_excerpt', 'maybe_convert_chars', 1);
-add_filter('the_excerpt', 'maybe_convert_smilies', 1);
+add_filter('the_content', 'maybe_wptexturize', 3);
+add_filter('the_content', 'maybe_wpautop', 3);
+add_filter('the_content', 'maybe_convert_chars', 3);
+add_filter('the_content', 'maybe_convert_smilies', 3);
+add_filter('the_excerpt', 'maybe_wptexturize', 3);
+add_filter('the_excerpt', 'maybe_wpautop', 3);
+add_filter('the_excerpt', 'maybe_convert_chars', 3);
+add_filter('the_excerpt', 'maybe_convert_smilies', 3);
 
 // Add a custom meta box for per-post settings 
 add_action('admin_menu', 'rawhtml_add_custom_box');

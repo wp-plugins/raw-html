@@ -3,7 +3,7 @@
 Plugin Name: Raw HTML capability
 Plugin URI: http://w-shadow.com/blog/2007/12/13/raw-html-in-wordpress/
 Description: Lets you enter raw HTML in your posts. You can also enable/disable smart quotes and other automatic formatting on a per-post basis.
-Version: 1.2.1
+Version: 1.2.2
 Author: Janis Elsts
 Author URI: http://w-shadow.com/blog/
 */
@@ -27,7 +27,7 @@ function wsh_extraction_callback($matches){
 
 function wsh_extract_exclusions($text){
 	global $wsh_raw_parts;
-	return preg_replace_callback("/(<!--\s*start_raw\s*-->|\[RAW\])(.*?)(<!--\s*end_raw\s*-->|\[\/RAW\])/Uis", 
+	return preg_replace_callback("/(<!--\s*start_raw\s*-->|\[RAW\])(.*?)(<!--\s*end_raw\s*-->|\[\/RAW\])/is", 
 		"wsh_extraction_callback", $text);
 }
 
@@ -39,7 +39,7 @@ function wsh_insertion_callback($matches){
 function wsh_insert_exclusions($text){
 	global $wsh_raw_parts;
 	if(!isset($wsh_raw_parts)) return $text;
-	return preg_replace_callback("/!RAWBLOCK(\d+)!/Uis", "wsh_insertion_callback", $text);		
+	return preg_replace_callback("/!RAWBLOCK(\d+?)!/", "wsh_insertion_callback", $text);		
 }
 
 add_filter('the_content', 'wsh_extract_exclusions', 2);

@@ -3,7 +3,7 @@
 Plugin Name: Raw HTML capability
 Plugin URI: http://w-shadow.com/blog/2007/12/13/raw-html-in-wordpress/
 Description: Lets you enter raw HTML in your posts. You can also enable/disable smart quotes and other automatic formatting on a per-post basis.
-Version: 1.2.2
+Version: 1.2.3
 Author: Janis Elsts
 Author URI: http://w-shadow.com/blog/
 */
@@ -21,14 +21,52 @@ $wsh_raw_parts=array();
 
 function wsh_extraction_callback($matches){
 	global $wsh_raw_parts;
-	$wsh_raw_parts[]=$matches[2];
+	$wsh_raw_parts[]=$matches[1];
 	return "!RAWBLOCK".(count($wsh_raw_parts)-1)."!";
 }
 
 function wsh_extract_exclusions($text){
 	global $wsh_raw_parts;
-	return preg_replace_callback("/(<!--\s*start_raw\s*-->|\[RAW\])(.*?)(<!--\s*end_raw\s*-->|\[\/RAW\])/is", 
+	
+	$tags = array(array('<!--start_raw-->', '<!--end_raw-->'), array('[RAW]', '[/RAW]'));
+
+	foreach ($tags as $tag_pair){
+		list($start_tag, $end_tag) = $tag_pair;
+		
+		//Find the start tag
+		$start = stripos($text, $start_tag, 0);
+		while($start !== false){
+			$content_start = $start + strlen($start_tag);
+			
+			//find the end tag
+			$fin = stripos($text, $end_tag, $content_start);
+			
+			//break if there's no end tag
+			if ($fin == false) break;
+			
+			//extract the content between the tags
+			$content = substr($text, $content_start,$fin-$content_start);
+			
+			//Store the content and replace it with a marker
+			$wsh_raw_parts[]=$content;
+			$replacement = "!RAWBLOCK".(count($wsh_raw_parts)-1)."!";
+			$text = substr_replace($text, $replacement, $start, 
+				$fin+strlen($end_tag)-$start
+			 );
+			
+			//Have we reached the end of the string yet?
+			if ($start + strlen($replacement) > strlen($text)) break;
+			
+			//Find the next start tag
+			$start = stripos($text, $start_tag, $start + strlen($replacement));
+		}
+	}
+	return $text;
+	/*
+	//The regexp version is much shorter, but it has problems with big posts : 
+	return preg_replace_callback("/(?:<!--\s*start_raw\s*-->|\[RAW\])(.*?)(?:<!--\s*end_raw\s*-->|\[\/RAW\])/is", 
 		"wsh_extraction_callback", $text);
+	//	*/
 }
 
 function wsh_insertion_callback($matches){

@@ -3,7 +3,7 @@
 Plugin Name: Raw HTML capability
 Plugin URI: http://w-shadow.com/blog/2007/12/13/raw-html-in-wordpress/
 Description: Lets you enter raw HTML in your posts. You can also enable/disable smart quotes and other automatic formatting on a per-post basis.
-Version: 1.2.3
+Version: 1.2.4
 Author: Janis Elsts
 Author URI: http://w-shadow.com/blog/
 */

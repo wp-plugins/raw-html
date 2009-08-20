@@ -2,7 +2,7 @@
 Contributors: whiteshadow
 Tags: posts, formatting, javascript, html, css, code
 Requires at least: 2.2
-Tested up to: 2.8.2
+Tested up to: 2.8.4
 Stable tag: 1.2.4
 
 Lets you use raw HTML or any other code in your posts. You can also disable smart quotes and other automatic formatting on a per-post basis.
@@ -44,3 +44,40 @@ To install the plugin follow these steps :
 1. Unzip the file.
 1. Upload the "raw-html" folder to your "/wp-content/plugins/" directory.
 1. Activate the plugin through the 'Plugins' menu in WordPress
+
+== Changelog ==
+
+= 1.2.4 =
+* *There are no release notes for this version*
+
+= 1.2.3 =
+* Fix a problem where very long posts would be displayed as blank. This was caused by a regexp input size limitation/bug in newer versions of PHP.
+
+= 1.2.2 =
+* Fix a glitch when one [RAW][/RAW] block is immediately followed by another (cause : greedy regexp).
+
+= 1.2.1 =
+* Change filter priorities *again* to make it compatible with Exec-PHP (hopefully).
+
+= 1.2 =
+* Improved compatibility with other plugins (e.g. cforms II).
+* Gave the "maybe\_" filters a higher priority to prevent conflicts with some plugins that want to insert untexturized HTML.
+
+= 1.1 =
+* New feature : disable wptexturize() and other filters on a per-post level.
+* "Official" WP 2.7 compatibility.
+* Fixed some readme.txt text
+
+= 1.0.5 =
+* Fix : regexp failing for very long posts, leading to blank pages.
+
+= 1.0.4 =
+* A tiny bugfix - changed one regexp to make quicktags perform as expected.
+
+= 1.0.3 =
+* WP 2.5.1 compatibility
+
+= 1.0.2 =
+* *There are no release notes for this version*
+
+

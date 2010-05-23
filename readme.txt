@@ -2,7 +2,7 @@
 Contributors: whiteshadow
 Tags: posts, formatting, javascript, html, css, code
 Requires at least: 2.2
-Tested up to: 2.9
+Tested up to: 2.9.2
 Stable tag: 1.2.5
 
 Lets you use raw HTML or any other code in your posts. You can also disable smart quotes and other automatic formatting on a per-post basis.
@@ -23,6 +23,7 @@ RawHTML will also add some new checkboxes to the "Edit" screen that will let you
 To prevent a part of your post or page from being filtered by WordPress, wrap it in `<!--start_raw-->...<!--end_raw-->` or `[RAW]...[/RAW]` tags. These two versions work exactly the same, but the latter may be handy if you're using the visual editor (not recommended).
 
 *Example :*
+
 `<!--start_raw-->
 This 
 

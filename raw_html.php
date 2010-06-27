@@ -3,7 +3,7 @@
 Plugin Name: Raw HTML capability
 Plugin URI: http://w-shadow.com/blog/2007/12/13/raw-html-in-wordpress/
 Description: Lets you enter raw HTML in your posts. You can also enable/disable smart quotes and other automatic formatting on a per-post basis.
-Version: 1.2.5
+Version: 1.3
 Author: Janis Elsts
 Author URI: http://w-shadow.com/blog/
 */
@@ -12,6 +12,8 @@ Author URI: http://w-shadow.com/blog/
 Created by Janis Elsts (email : whiteshadow@w-shadow.com) 
 It's LGPL.
 */
+
+include 'screen-options/screen-options.php';
 
 /**********************************************
 	Filter inline blocks of raw HTML
@@ -168,13 +170,19 @@ function rawhtml_meta_box(){
 		'disable_wpautop' => 'Disable automatic paragraphs',
 		'disable_convert_chars' => 'Disable convert_chars',
 		'disable_convert_smilies' => 'Disable smilies',
-	 );
+	);
+	$defaults = rawhtml_get_default_settings();
 	foreach($fields as $field => $legend){
+		$current_setting = get_post_meta($post->ID, $field, true);
+		if ( $current_setting == '' ){
+			$current_setting = $defaults[$field];
+		} else {
+			$current_setting = (bool)intval($current_setting);
+		}
 ?>
 <label for="rawhtml_<?php echo $field; ?>">
 	<input type="checkbox" name="rawhtml_<?php echo $field; ?>" id="rawhtml_<?php echo $field; ?>" <?php
-		if (get_post_meta($post->ID, $field, true) == '1')
-			echo ' checked="checked"';
+		if ($current_setting) echo ' checked="checked"';
 	?>/>
 	<?php echo $legend; ?>
 </label>
@@ -187,6 +195,10 @@ function rawhtml_meta_box(){
 function rawhtml_save_postdata( $post_id ){
   // verify this came from the our screen and with proper authorization,
   // because save_post can be triggered at other times
+  
+  if ( !isset($_POST['rawhtml_nonce']) ){
+	return $post_id;
+  }
   
   if ( !wp_verify_nonce( $_POST['rawhtml_nonce'], plugin_basename(__FILE__) )) {
     return $post_id;
@@ -206,10 +218,128 @@ function rawhtml_save_postdata( $post_id ){
   	  if ( !empty($_POST['rawhtml_'.$field]) ){
 		update_post_meta($post_id, $field, '1');
 	  } else {
-		delete_post_meta($post_id, $field);
+		update_post_meta($post_id, $field, '0');
 	  };
   }
 
   return true;
 }
+
+//Add our panel to the "Screen Options" box
+add_screen_options_panel(
+	'rawhtml-default-settings', 
+	'Raw HTML defaults', 
+	'rawhtml_default_settings_panel', 
+	array('post', 'page'),
+	'rawhtml_save_new_defaults',
+	true
+);
+
+/**
+ * Retrieve the default settings for our post/page meta box.
+ * Settings are saved in user meta.
+ * 
+ * @return array
+ */
+function rawhtml_get_default_settings(){
+	//By default, all tweaks are disabled
+	$defaults = array(
+		'disable_wptexturize' => false,
+		'disable_wpautop' => false,
+		'disable_convert_chars' => false,
+		'disable_convert_smilies' => false,
+	);
+	
+	if ( !function_exists('wp_get_current_user') || !function_exists('get_user_meta') ){
+		return $defaults;
+	}
+	
+	//Get current defaults, if any
+	$user = wp_get_current_user();
+	$user_defaults = get_user_meta($user->ID, 'rawhtml_defaults', true);
+	if ( is_array($user_defaults) ){
+		$defaults = array_merge($defaults, $user_defaults);
+	}
+	
+	return $defaults;
+}
+
+/**
+ * Update default settings for our post/page meta box.
+ * 
+ * @param array $new_defaults
+ * @return bool True on success, false on failure.
+ */
+function rawhtml_set_default_settings($new_defaults){
+	if ( !function_exists('wp_get_current_user') || !function_exists('update_user_meta') ){
+		return false;
+	}
+	
+	//Get current defaults, if any
+	$user = wp_get_current_user();
+	if ( isset($user) && $user && isset($user->ID) ){
+		return update_user_meta($user->ID, 'rawhtml_defaults', $new_defaults);
+	} else {
+		return false;
+	}
+}
+
+/**
+ * Generate the "Raw HTML defaults" panel for Screen Options.
+ * 
+ * @return string
+ */
+function rawhtml_default_settings_panel(){
+	$defaults = rawhtml_get_default_settings();
+	
+	//Output checkboxes 
+	$fields = array(
+		'disable_wptexturize' => 'Disable wptexturize',
+		'disable_wpautop' => 'Disable automatic paragraphs',
+		'disable_convert_chars' => 'Disable convert_chars',
+		'disable_convert_smilies' => 'Disable smilies',
+	 );
+	 
+ 	$output = '';
+	foreach($fields as $field => $legend){
+		$esc_field = esc_attr($field);
+		$output .= sprintf(
+			'<label for="rawhtml_default-%s" style="line-height: 20px;">
+				<input type="checkbox" name="rawhtml_default-%s" id="rawhtml_default-%s"%s>
+				%s
+			</label><br>',
+			$esc_field,
+			$esc_field,
+			$esc_field,
+			($defaults[$field]?' checked="checked"':''),
+			$legend
+		);
+	}
+	
+	return $output;
+}
+
+/**
+ * Process the "Raw HTML defaults" form fields and save new settings
+ * 
+ * @param array $params
+ * @return void
+ */
+function rawhtml_save_new_defaults($params){
+	//Get current defaults
+	$defaults = rawhtml_get_default_settings();
+	
+	//Read new values from the submitted form
+	foreach($defaults as $field => $old_value){
+		if ( isset($params['rawhtml_default-'.$field]) && ($params['rawhtml_default-'.$field] == 'on') ){
+			$defaults[$field] = true;
+		} else {
+			$defaults[$field] = false;
+		}
+	}
+	
+	//Store the new defaults
+	rawhtml_set_default_settings($defaults);
+}
+
 ?>

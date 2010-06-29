@@ -227,12 +227,12 @@ function rawhtml_save_postdata( $post_id ){
 
 //Add our panel to the "Screen Options" box
 add_screen_options_panel(
-	'rawhtml-default-settings', 
-	'Raw HTML defaults', 
-	'rawhtml_default_settings_panel', 
-	array('post', 'page'),
-	'rawhtml_save_new_defaults',
-	true
+	'rawhtml-default-settings',       //Panel ID
+	'Raw HTML defaults',              //Panel title. 
+	'rawhtml_default_settings_panel', //The function that generates panel contents.
+	array('post', 'page'),            //Pages/screens where the panel is displayed. 
+	'rawhtml_save_new_defaults',      //The function that gets triggered when settings are submitted/saved.
+	true                              //Auto-submit settings (via AJAX) when they change. 
 );
 
 /**

@@ -60,6 +60,7 @@ class wsScreenOptions10 {
 			add_action('wp_ajax_save_settings-' . $id, array(&$this, 'ajax_save_callback'));
 		}
 		
+		//Store the panel ID in each relevant page's list
 		foreach($page as $page_id){
 			if ( !isset($this->page_panels[$page_id]) ){
 				$this->page_panels[$page_id] = array();
@@ -111,10 +112,10 @@ class wsScreenOptions10 {
 		}
 		
 		//Are there any panels that want to appear on this page? 
-		if ( !isset($this->page_panels[$screen->id]) || empty($this->page_panels[$screen->id]) ){
+		$panels = $this->get_panels_for_screen($screen->id, $hook_suffix);
+		if ( empty($panels) ){
 			return $current;
 		}
-		$panels = $this->page_panels[$screen->id];
 		
 		//Append all panels registered for this screen
 		foreach($panels as $panel_id){
@@ -192,13 +193,13 @@ class wsScreenOptions10 {
 	function add_autosave_script(){
 		//Get the page id/hook/slug/whatever.
 		global $hook_suffix;
-		$page = $this->page_to_screen_id($hook_suffix);
 		
 		//Check if we have some panels with autosave registered for this page.
-		if ( !isset($this->page_panels[$page]) || empty($this->page_panels[$page]) ){
+		$panels = $this->get_panels_for_screen('', $hook_suffix);
+		if ( empty($panels) ){
 			return;
 		}
-		$panels = $this->page_panels[$page];
+		
 		$got_autosave = false;
 		foreach($panels as $panel_id){
 			if ( $this->registered_panels[$panel_id]['autosave'] ){
@@ -212,6 +213,28 @@ class wsScreenOptions10 {
 			$url = plugins_url('screen-options.js', __FILE__);
 			wp_enqueue_script('screen-options-custom-autosave', $url, array('jquery'));
 		}
+	}
+	
+	/**
+	 * Get custom panels registered for a particular screen and/or page. 
+	 * 
+	 * @param string $screen_id Screen ID.
+	 * @param string $page Optional. Page filename or hook name.
+	 * @return array Array of custom panels.
+	 */
+	function get_panels_for_screen($screen_id, $page = ''){
+		if ( isset($this->page_panels[$screen_id]) && !empty($this->page_panels[$screen_id]) ){
+			$panels = $this->page_panels[$screen_id];
+		} else {
+			$panels = array();
+		}
+		if ( !empty($page) ){
+			$page_as_screen = $this->page_to_screen_id($page);
+			if ( isset($this->page_panels[$page_as_screen]) && !empty($this->page_panels[$page_as_screen]) ){
+				$panels = array_merge($panels, $this->page_panels[$page_as_screen]);
+			}
+		}		
+		return array_unique($panels);
 	}
 }
 
@@ -237,7 +260,7 @@ if ( !function_exists('add_screen_options_panel') ){
 	 * @param callback $callback Function that fills the panel with the desired content. Should return its output.
 	 * @param string|array $page The page(s) on which to show the panel (similar to add_meta_box()).
 	 * @param callback $save_callback Optional. Function that saves the settings contained in the panel.
-	 * @param bool $autosave Optional. If se, settings will be automatically saved (via AJAX) when the value of any input element in the panel changes. Defaults to false.
+	 * @param bool $autosave Optional. If set, settings will be automatically saved (via AJAX) when the value of any input element in the panel changes. Defaults to false.
 	 * @return void
 	 */
 	function add_screen_options_panel($id, $title, $callback, $page, $save_callback = null, $autosave = false){

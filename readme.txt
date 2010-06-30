@@ -46,6 +46,13 @@ To install the plugin follow these steps :
 1. Upload the "raw-html" folder to your "/wp-content/plugins/" directory.
 1. Activate the plugin through the 'Plugins' menu in WordPress
 
+== Frequently Asked Questions ==
+
+= How can I set some of the "Disable xyz" tweaks to be "On" by default? =
+
+Open to the post editor and click the "Screen Options" button in the top-right part of the page. A settings panel will appear. Locate the "Raw HTML defaults" section and tick the appropriate checkboxes. Any changes you make to these settings will only affect new and edited posts.
+
+
 == Changelog ==
 
 = 1.3 =

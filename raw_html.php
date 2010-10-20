@@ -28,7 +28,7 @@ function wsh_extraction_callback($matches){
 }
 
 function wsh_extract_exclusions($text){
-	global $wsh_raw_parts;
+	global $wsh_raw_parts, $wp_current_filter;
 	
 	$tags = array(array('<!--start_raw-->', '<!--end_raw-->'), array('[RAW]', '[/RAW]'));
 
@@ -49,12 +49,17 @@ function wsh_extract_exclusions($text){
 			//extract the content between the tags
 			$content = substr($text, $content_start,$fin-$content_start);
 			
-			//Store the content and replace it with a marker
-			$wsh_raw_parts[]=$content;
-			$replacement = "!RAWBLOCK".(count($wsh_raw_parts)-1)."!";
+			if ( (array_search('get_the_excerpt', $wp_current_filter) !== false) || (array_search('the_excerpt', $wp_current_filter) !== false) ){
+				//Strip out the raw blocks when displaying an excerpt
+				$replacement = '';
+			} else {
+				//Store the content and replace it with a marker
+				$wsh_raw_parts[]=$content;
+				$replacement = "!RAWBLOCK".(count($wsh_raw_parts)-1)."!";				
+			}
 			$text = substr_replace($text, $replacement, $start, 
 				$fin+strlen($end_tag)-$start
-			 );
+			);
 			
 			//Have we reached the end of the string yet?
 			if ($start + strlen($replacement) > strlen($text)) break;
@@ -300,7 +305,7 @@ function rawhtml_default_settings_panel(){
 		'disable_convert_smilies' => 'Disable smilies',
 	 );
 	 
- 	$output = '';
+ 	$output = '<div class="metabox-prefs">';
 	foreach($fields as $field => $legend){
 		$esc_field = esc_attr($field);
 		$output .= sprintf(
@@ -315,6 +320,7 @@ function rawhtml_default_settings_panel(){
 			$legend
 		);
 	}
+	$output .= "</div>";
 	
 	return $output;
 }

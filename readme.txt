@@ -2,8 +2,8 @@
 Contributors: whiteshadow
 Tags: posts, formatting, javascript, html, css, code
 Requires at least: 2.6
-Tested up to: 3.0
-Stable tag: 1.3
+Tested up to: 3.1
+Stable tag: 1.4
 
 Lets you use raw HTML or any other code in your posts. You can also disable smart quotes and other automatic formatting on a per-post basis.
 
@@ -54,6 +54,9 @@ Open to the post editor and click the "Screen Options" button in the top-right p
 
 
 == Changelog ==
+
+= 1.4 =
+* To decrease UI clutter, post-level settings now use hidden custom fields. 
 
 = 1.3 =
 * Added a new panel to the "Screen Options" box that lest you auto-enable specific RawHTML settings (e.g. "Disable automatic paragraphs") for all new or updated posts.

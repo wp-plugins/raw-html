@@ -3,7 +3,7 @@
 Plugin Name: Raw HTML capability
 Plugin URI: http://w-shadow.com/blog/2007/12/13/raw-html-in-wordpress/
 Description: Lets you enter raw HTML in your posts. You can also enable/disable smart quotes and other automatic formatting on a per-post basis.
-Version: 1.3
+Version: 1.4
 Author: Janis Elsts
 Author URI: http://w-shadow.com/blog/
 */
@@ -97,7 +97,11 @@ add_filter('the_content', 'wsh_insert_exclusions', 1001);
 //Apply function $func to $content unless it's been disabled for the current post 
 function maybe_use_filter($func, $content){
 	global $post;
-	if (get_post_meta($post->ID, 'disable_'.$func, true) == '1') {
+	$setting = get_post_meta($post->ID, '_disable_'.$func, true);
+	if ( $setting == '' ){
+		$setting = get_post_meta($post->ID, 'disable_'.$func, true);
+	}
+	if ($setting == '1') {
 		return $content;
 	} else {
 		return $func($content);
@@ -178,7 +182,10 @@ function rawhtml_meta_box(){
 	);
 	$defaults = rawhtml_get_default_settings();
 	foreach($fields as $field => $legend){
-		$current_setting = get_post_meta($post->ID, $field, true);
+		$current_setting = get_post_meta($post->ID, '_'.$field, true);
+		if (  $current_setting == '' ){
+			$current_setting = get_post_meta($post->ID, $field, true);
+		}
 		if ( $current_setting == '' ){
 			$current_setting = $defaults[$field];
 		} else {
@@ -221,9 +228,9 @@ function rawhtml_save_postdata( $post_id ){
   $fields  = array('disable_wpautop', 'disable_wptexturize', 'disable_convert_chars', 'disable_convert_smilies');
   foreach ( $fields as $field ){	
   	  if ( !empty($_POST['rawhtml_'.$field]) ){
-		update_post_meta($post_id, $field, '1');
+		update_post_meta($post_id, '_'.$field, '1');
 	  } else {
-		update_post_meta($post_id, $field, '0');
+		update_post_meta($post_id, '_'.$field, '0');
 	  };
   }
 

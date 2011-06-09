@@ -2,8 +2,8 @@
 Contributors: whiteshadow
 Tags: posts, formatting, javascript, html, css, code, disable
 Requires at least: 2.8
-Tested up to: 3.2-beta2-18055
-Stable tag: 1.4
+Tested up to: 3.1.3
+Stable tag: 1.4.1
 
 Lets you use raw HTML or any other code in your posts. You can also disable smart quotes and other automatic formatting on a per-post basis.
 
@@ -20,22 +20,22 @@ RawHTML will also add some new checkboxes to the "Edit" screen that let you disa
 
 **Using the plugin**
 
-To prevent a part of your post or page from being filtered by WordPress, wrap it in `<!--start_raw-->...<!--end_raw-->` or `[RAW]...[/RAW]` tags. These two versions work exactly the same, but the latter may be handy if you're using the visual editor (not recommended).
+To prevent a part of your post or page from being filtered by WordPress, wrap it in `<!--raw-->...<!--/raw-->` or `[RAW]...[/RAW]` tags. These two versions work exactly the same, except that the latter won't be visible to your visitors even if you deactivate Raw HTML.
 
 *Example :*
 
-`<!--start_raw-->
+`<!--raw-->
 This 
 
 is 
 
 a 'test'!
-<!--end_raw-->`
+<!--/raw-->`
 
 **Notes**
 
 * I strongly recommend to turn off the visual editor when you want to edit a post that contains raw HTML/JS/CSS. 
-* Personally, I prefer the `<!--start_raw-->...<!--end_raw-->` syntax. These tags are formed as HTML comments, which means they won't be visible to your visitors even if you deactivate the Raw HTML plugin. On the other hand. the `[RAW]...[/RAW]` tags would show up.
+* Personally, I prefer the `<!--raw-->...<!--/raw-->` syntax. These tags are formed as HTML comments, which means they won't be visible to your visitors even if you deactivate the Raw HTML plugin. On the other hand. the `[RAW]...[/RAW]` tags would show up.
 
 == Installation ==
 
@@ -55,8 +55,12 @@ Open to the post editor and click the "Screen Options" button in the top-right p
 
 == Changelog ==
 
+= 1.4.1 =
+* Tested on the latest Beta version of WordPress (3.2-beta2).
+* Prefer `<!--raw-->...<!--/raw-->` over `<!--start_raw-->...<!--/end_raw-->`. The old syntax will continue to work, but you're encouraged to use either [raw] or `<!--raw-->` in the future as they're more internally consistent (and shorter).
+
 = 1.4 =
-* To decrease UI clutter, post-level settings now use hidden custom fields. 
+* To decrease UI clutter, post-level settings now use hidden custom fields.
 
 = 1.3 =
 * Added a new panel to the "Screen Options" box that lest you auto-enable specific RawHTML settings (e.g. "Disable automatic paragraphs") for all new or updated posts.

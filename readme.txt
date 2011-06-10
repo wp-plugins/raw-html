@@ -3,13 +3,13 @@ Contributors: whiteshadow
 Tags: posts, formatting, javascript, html, css, code, disable
 Requires at least: 2.8
 Tested up to: 3.1.3
-Stable tag: 1.4.1
+Stable tag: 1.4
 
 Lets you use raw HTML or any other code in your posts. You can also disable smart quotes and other automatic formatting on a per-post basis.
 
 == Description ==
 
-This plugin lets you use raw HTML or any other code in your posts. One way to use it is to wrap a part of your post in special tags (below) to prevent WordPress from converting newlines to HTML paragraphs, escaping apostrophes and so on. This is very useful if you need to add a CSS block or JavaScript to your post.
+This plugin lets you use raw HTML or any other code in your posts. One way to use it is to wrap a part of your post in [raw]...[/raw] tags to prevent WordPress from converting newlines to HTML paragraphs, escaping apostrophes and so on. This is very useful if you need to add a CSS block or JavaScript to your post.
 
 RawHTML will also add some new checkboxes to the "Edit" screen that let you disable certain WP filters on a per-post basis. This way you can : 
 
@@ -18,9 +18,11 @@ RawHTML will also add some new checkboxes to the "Edit" screen that let you disa
 * Disable image smilies. 
 * Disable convert_chars (this filter converts ampersands to HTML entities and "fixes" some Unicode characters).
 
-**Using the plugin**
+Note: The free version only supports the HTML editor. Use the premium version if you want to be able to switch between HTML and the Visual editor without WordPress mangling your content.
 
-To prevent a part of your post or page from being filtered by WordPress, wrap it in `<!--raw-->...<!--/raw-->` or `[RAW]...[/RAW]` tags. These two versions work exactly the same, except that the latter won't be visible to your visitors even if you deactivate Raw HTML.
+**Usage**
+
+To prevent a part of your post or page from being filtered by WordPress, wrap it in `[raw]...[/raw]` or `<!--raw-->...<!--/raw-->` tags. These two versions work exactly the same, except that the latter won't be visible to your visitors even if you deactivate Raw HTML.
 
 *Example :*
 
@@ -34,8 +36,7 @@ a 'test'!
 
 **Notes**
 
-* I strongly recommend to turn off the visual editor when you want to edit a post that contains raw HTML/JS/CSS. 
-* Personally, I prefer the `<!--raw-->...<!--/raw-->` syntax. These tags are formed as HTML comments, which means they won't be visible to your visitors even if you deactivate the Raw HTML plugin. On the other hand. the `[RAW]...[/RAW]` tags would show up.
+Personally, I prefer the `<!--raw-->...<!--/raw-->` syntax. These tags are formed as HTML comments, which means they won't be visible to your visitors even if you deactivate the Raw HTML plugin. On the other hand. the `[raw]...[/raw]` tags would show up.
 
 == Installation ==
 

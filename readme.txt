@@ -31,8 +31,10 @@ This
 
 is 
 
-a 'test'!
+a "test"!
 <!--/raw-->`
+
+In this case, the tags will prevent WordPress from inserting paragraph breaks between "This", "is" and "a "test"", as well as ensure that the double quotes arround "test" are not converted to typographic (curly) quotes.
 
 **Notes**
 

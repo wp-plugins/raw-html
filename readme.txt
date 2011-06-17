@@ -18,7 +18,7 @@ RawHTML will also add some new checkboxes to the "Edit" screen that let you disa
 * Disable image smilies. 
 * Disable convert_chars (this filter converts ampersands to HTML entities and "fixes" some Unicode characters).
 
-Note: The free version only supports the HTML editor. Use the premium version if you want to be able to switch between HTML and the Visual editor without WordPress mangling your content.
+Note: The free version only supports the HTML editor. Use [the premium version](http://wpplugins.com/plugin/850/raw-html-pro/) if you want to be able to switch between HTML and the Visual editor without WordPress mangling your content.
 
 **Usage**
 

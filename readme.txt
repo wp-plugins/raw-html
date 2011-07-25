@@ -9,7 +9,11 @@ Lets you use raw HTML or any other code in your posts. You can also disable smar
 
 == Description ==
 
-This plugin lets you use raw HTML or any other code in your posts. One way to use it is to wrap a part of your post in [raw]...[/raw] tags to prevent WordPress from converting newlines to HTML paragraphs, escaping apostrophes and so on. This is very useful if you need to add a CSS block or JavaScript to your post.
+Lets you disable automatic formatting like smart quotes and automatic paragraphs, and use raw HTML/JS/CSS code in your posts without WordPress messing it up.
+
+[Upgrade to Pro version](http://wpplugins.com/plugin/850/raw-html-pro/)
+
+With this plugin, you can wrap any part of your post in [raw]...[/raw] tags to prevent WordPress from converting newlines to HTML paragraphs, replacing apostrophes with typographic quotes and so on. This is very useful if you need to add a CSS block or JavaScript to your post.
 
 RawHTML will also add some new checkboxes to the "Edit" screen that let you disable certain WP filters on a per-post basis. This way you can : 
 

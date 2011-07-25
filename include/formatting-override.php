@@ -87,13 +87,16 @@ function rawhtml_meta_box(){
 	
 	//Output checkboxes 
 	$fields = array(
-		'disable_wptexturize' => 'Disable wptexturize',
-		'disable_wpautop' => 'Disable automatic paragraphs',
-		'disable_convert_chars' => 'Disable convert_chars',
-		'disable_convert_smilies' => 'Disable smilies',
+		'disable_wptexturize' => array('Disable wptexturize', 'wptexturize is responsible for smart quotes and other typographic characters'),
+		'disable_wpautop' => array('Disable automatic paragraphs', null),
+		'disable_convert_chars' => array('Disable convert_chars', 'convert_chars converts ampersand to HTML entities and "fixes" some Unicode character'),
+		'disable_convert_smilies' => array('Disable smilies', null),
 	);
 	$defaults = rawhtml_get_default_settings();
-	foreach($fields as $field => $legend){
+	
+	echo '<ul>';
+	foreach($fields as $field => $info){
+		list($legend, $title) = $info;
 		$current_setting = get_post_meta($post->ID, '_'.$field, true);
 		if (  $current_setting == '' ){
 			$current_setting = get_post_meta($post->ID, $field, true);
@@ -104,15 +107,16 @@ function rawhtml_meta_box(){
 			$current_setting = (bool)intval($current_setting);
 		}
 ?>
-<label for="rawhtml_<?php echo $field; ?>">
+<li><label for="rawhtml_<?php echo $field; ?>" title="<?php if (!empty($title)) echo esc_attr($title); ?>">
 	<input type="checkbox" name="rawhtml_<?php echo $field; ?>" id="rawhtml_<?php echo $field; ?>" <?php
 		if ($current_setting) echo ' checked="checked"';
 	?>/>
 	<?php echo $legend; ?>
 </label>
-<br /> 
+</li> 
 <?php
 	}
+	echo '</ul>';
 }
 
 /* Saves post metadata */

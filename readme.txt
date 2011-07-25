@@ -11,18 +11,20 @@ Lets you use raw HTML or any other code in your posts. You can also disable smar
 
 Lets you disable automatic formatting like smart quotes and automatic paragraphs, and use raw HTML/JS/CSS code in your posts without WordPress messing it up.
 
+The free version only works with the HTML editor. Get the Pro Version if you want to be able to switch between HTML and the Visual editor without WordPress messing up your content.
+
 [Upgrade to Pro version](http://wpplugins.com/plugin/850/raw-html-pro/)
+
+**Features**
 
 With this plugin, you can wrap any part of your post in [raw]...[/raw] tags to prevent WordPress from converting newlines to HTML paragraphs, replacing apostrophes with typographic quotes and so on. This is very useful if you need to add a CSS block or JavaScript to your post.
 
 RawHTML will also add some new checkboxes to the "Edit" screen that let you disable certain WP filters on a per-post basis. This way you can : 
 
-* Disable wptexturize (this filter creates smart quotes and other typographic characters).
+* Disable wptexturize (the function that creates smart quotes and other typographic characters).
 * Disable automatic paragraph creation.
 * Disable image smilies. 
-* Disable convert_chars (this filter converts ampersands to HTML entities and "fixes" some Unicode characters).
-
-Note: The free version only supports the HTML editor. Use [the premium version](http://wpplugins.com/plugin/850/raw-html-pro/) if you want to be able to switch between HTML and the Visual editor without WordPress mangling your content.
+* Disable convert_chars (the function that converts ampersands to HTML entities and "fixes" some Unicode characters).
 
 **Usage**
 

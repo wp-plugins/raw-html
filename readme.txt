@@ -64,6 +64,10 @@ Open to the post editor and click the "Screen Options" button in the top-right p
 
 == Changelog ==
 
+= 1.4.2 =
+* Tested on WordPress 3.2.1
+* Improved the checkbox layout in the plugin's post editor widget (extra whitespace).
+
 = 1.4.1 =
 * Tested on the latest Beta version of WordPress (3.2-beta2).
 * Prefer `<!--raw-->...<!--/raw-->` over `<!--start_raw-->...<!--/end_raw-->`. The old syntax will continue to work, but you're encouraged to use either [raw] or `<!--raw-->` in the future as they're more internally consistent (and shorter).

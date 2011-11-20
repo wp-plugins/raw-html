@@ -1,9 +1,9 @@
 <?php
 /*
-Plugin Name: Raw HTML capability
+Plugin Name: Raw HTML
 Plugin URI: http://w-shadow.com/blog/2007/12/13/raw-html-in-wordpress/
 Description: Lets you enter raw HTML in your posts and disable automatic formatting on a per-post basis. <a href="http://wpplugins.com/plugin/850/raw-html-pro/">Upgrade to Pro Version</a>
-Version: 1.4.2
+Version: 1.4.3
 Author: Janis Elsts
 Author URI: http://w-shadow.com/blog/
 */

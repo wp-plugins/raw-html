@@ -57,7 +57,7 @@ function rawhtml_add_conditional_filters(){
 	foreach ( $filters as $tag => $functions ){
 		foreach ( $functions as $func ){
 			if ( remove_filter($tag, $func) ){
-				add_filter( $tag, 'maybe_'.$func );
+				add_filter( $tag, 'maybe_'.$func, 9 );
 			};
 		}
 	}

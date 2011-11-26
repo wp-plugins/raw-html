@@ -64,6 +64,9 @@ Open to the post editor and click the "Screen Options" button in the top-right p
 
 == Changelog ==
 
+= 1.4.4 =
+* Fixed a minor conflict with the "Really simple Facebook Twitter share buttons" plugin. 
+
 = 1.4.3 =
 * Changed the name to just "Raw HTML".
 * Fixed incompatibility with SyntaxHighlighter Evolved.

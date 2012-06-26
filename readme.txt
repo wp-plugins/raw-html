@@ -46,6 +46,8 @@ In this case, the tags will prevent WordPress from inserting paragraph breaks be
 
 Personally, I prefer the `<!--raw-->...<!--/raw-->` syntax. These tags are formed as HTML comments, which means they won't be visible to your visitors even if you deactivate the Raw HTML plugin. On the other hand. the `[raw]...[/raw]` tags would show up.
 
+Some features of Raw HTML will only work for users who have the "unfiltered_html" capability. In a normal WordPress install that includes the Editor and Administrator roles. In a Multisite install, only the Super Admin has this capability.
+
 == Installation ==
 
 To install the plugin follow these steps :

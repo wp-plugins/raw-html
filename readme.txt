@@ -2,7 +2,7 @@
 Contributors: whiteshadow
 Tags: posts, formatting, javascript, html, css, code, disable
 Requires at least: 2.8
-Tested up to: 3.4
+Tested up to: 3.4.1
 Stable tag: 1.4.6
 
 Lets you use raw HTML or any other code in your posts. You can also disable smart quotes and other automatic formatting on a per-post basis.
@@ -39,6 +39,8 @@ a "test"!
 <!--/raw-->`
 
 In this case, the tags will prevent WordPress from inserting paragraph breaks between "This", "is" and "a "test"", as well as ensure that the double quotes arround "test" are not converted to typographic (curly) quotes.
+
+To avoid problems, only edit posts that contain your custom code in HTML mode. If you'd like to be able to also use the Visual editor, [get the Pro version](http://rawhtmlpro.com/?utm_source=wordpress.org&utm_medium=readme_link&utm_campaign=RawHTML%20free). It will make the code betwen [raw] tags appear as a read-only placeholder when viewed in Visual mode, ensuring WordPress doesn't change it.
 
 **Notes**
 

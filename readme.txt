@@ -9,26 +9,24 @@ Lets you use raw HTML or any other code in your posts. You can also disable smar
 
 == Description ==
 
-Lets you disable automatic formatting like smart quotes and automatic paragraphs, and use raw HTML/JS/CSS code in your posts without WordPress messing it up.
-
-The free version only works with the HTML editor. Get the Pro Version if you want to be able to switch between HTML and the Visual editor without WordPress messing up your content.
-
-[Upgrade to Pro version](http://w-shadow.com/RawHTML/)
+Lets you disable automatic formatting like smart quotes and automatic paragraph creation, and use raw HTML/JS/CSS code in your posts without WordPress messing it up.
 
 **Features**
 
 With this plugin, you can wrap any part of your post in [raw]...[/raw] tags to prevent WordPress from converting newlines to HTML paragraphs, replacing apostrophes with typographic quotes and so on. This is very useful if you need to add a CSS block or JavaScript to your post.
 
-RawHTML will also add some new checkboxes to the "Edit" screen that let you disable certain WP filters on a per-post basis. This way you can : 
+RawHTML will also add new checkboxes to the "Edit Post" screen that let you disable certain WP filters on a per-post basis. This way you can : 
 
 * Disable wptexturize (the function that creates smart quotes and other typographic characters).
 * Disable automatic paragraph creation.
 * Disable image smilies. 
 * Disable convert_chars (the function that converts ampersands to HTML entities and "fixes" some Unicode characters).
 
+The free version only supports the HTML editor. [Get the Pro version](http://rawhtmlpro.com/?utm_source=wordpress.org&utm_medium=readme_link&utm_campaign=RawHTML%20free) if you want to be able to switch between HTML and the Visual editor without WordPress messing up your content.
+
 **Usage**
 
-To prevent a part of your post or page from being filtered by WordPress, wrap it in `[raw]...[/raw]` or `<!--raw-->...<!--/raw-->` tags. These two versions work exactly the same, except that the latter won't be visible to your visitors even if you deactivate Raw HTML.
+To prevent a part of your post or page from being filtered by WordPress, switch to the HTML editor and wrap it in `[raw]...[/raw]` or `<!--raw-->...<!--/raw-->` tags. These two versions work exactly the same, except that the latter won't be visible to your visitors even if you deactivate Raw HTML.
 
 *Example :*
 
@@ -44,9 +42,7 @@ In this case, the tags will prevent WordPress from inserting paragraph breaks be
 
 **Notes**
 
-Personally, I prefer the `<!--raw-->...<!--/raw-->` syntax. These tags are formed as HTML comments, which means they won't be visible to your visitors even if you deactivate the Raw HTML plugin. On the other hand. the `[raw]...[/raw]` tags would show up.
-
-Some features of Raw HTML will only work for users who have the "unfiltered_html" capability. In a normal WordPress install that includes the Editor and Administrator roles. In a Multisite install, only the Super Admin has this capability.
+Some features of Raw HTML will only work for users who have the "unfiltered_html" capability. In a normal WordPress install that includes the Editor and Administrator roles. In a Multisite install, only the Super Admin has this capability by default.
 
 == Installation ==
 
@@ -58,6 +54,12 @@ To install the plugin follow these steps :
 1. Activate the plugin through the 'Plugins' menu in WordPress
 
 == Frequently Asked Questions ==
+
+= What's the difference between the free version and the Pro version? =
+
+If you're using the free version, switching from HTML to the Visual editor can still mess up your code. The [Pro version](http://rawhtmlpro.com/?utm_source=wordpress.org&utm_medium=readme_link&utm_campaign=RawHTML%20free) fixes this. 
+
+The way it works is that it replaces `[raw]...[/raw]` code with read-only placeholders when viewed via the Visual editor, and restores the original code when you switch to HTML or when the post is displayed your readers. This allows you to switch between HTML and Visual modes without worrying your content will get mangled by WP.
 
 = How can I set some of the "Disable xyz" tweaks to be "On" by default? =
 

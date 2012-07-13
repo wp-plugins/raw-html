@@ -70,6 +70,12 @@ Open to the post editor and click the "Screen Options" button in the top-right p
 
 == Changelog ==
 
+= 1.4.7 =
+* Tested with WP 3.4.1
+* Fixed the Author URI (was 404).
+* Updated the plugin description. Now it also includes short usage instructions.
+* Fixed the link to the Pro version (new site).
+
 = 1.4.6 =
 * Tested on WP 3.4 (final release).
 

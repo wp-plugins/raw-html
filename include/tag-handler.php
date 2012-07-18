@@ -94,10 +94,22 @@ function wsh_insertion_callback($matches){
 	return $wsh_raw_parts[intval($matches[1])];
 }
 
-//Extract the tagged content before WP can get to it, then re-insert it later.
-add_filter('the_content', 'wsh_extract_exclusions', 2);
-add_filter('the_content', 'wsh_insert_exclusions', 1001);
+function wsh_setup_content_filters() {
+	//Extract the tagged content before WP can get to it, then re-insert it later.
+	add_filter('the_content', 'wsh_extract_exclusions', 2);
 
+	//A workaround for WP-Syntax. If we run our insertion callback at the normal, extra-late
+	//priority, WP-Syntax will see the wrong content when it runs its own content substitution hook.
+	//We adapt to that by running our callback slightly earlier than WP-Syntax's.
+	$wp_syntax_priority = has_filter('the_content', 'wp_syntax_after_filter');
+	if ( $wp_syntax_priority !== false ) {
+		$rawhtml_priority = $wp_syntax_priority - 1;
+	} else {
+		$rawhtml_priority = 1001;
+	}
+	add_filter('the_content', 'wsh_insert_exclusions', $rawhtml_priority);
+}
+add_action('plugins_loaded', 'wsh_setup_content_filters');
 
 /* 
  * WordPress can also mangle code when initializing the post/page editor.

@@ -120,5 +120,3 @@ function wsh_insertion_callback_for_editor($matches){
 
 add_filter('the_editor_content', 'wsh_extract_exclusions_for_editor', 2);
 add_filter('the_editor_content', 'wsh_insert_exclusions_for_editor', 1001);
-
-?>

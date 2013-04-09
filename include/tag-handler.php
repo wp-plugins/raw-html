@@ -112,6 +112,10 @@ function wsh_setup_content_filters() {
 	//priority, WP-Syntax will see the wrong content when it runs its own content substitution hook.
 	//We adapt to that by running our callback slightly earlier than WP-Syntax's.
 	$wp_syntax_priority = has_filter('the_content', 'wp_syntax_after_filter');
+	if ( $wp_syntax_priority === false && class_exists('WP_Syntax') ) {
+		//Newer versions of WP-Syntax use a class with static methods instead of plain functions.
+		$wp_syntax_priority = has_filter('the_content', array('WP_Syntax', 'afterFilter'));
+	}
 	if ( $wp_syntax_priority !== false ) {
 		$rawhtml_priority = $wp_syntax_priority - 1;
 	} else {
@@ -119,7 +123,7 @@ function wsh_setup_content_filters() {
 	}
 	add_filter('the_content', 'wsh_insert_exclusions', $rawhtml_priority);
 }
-add_action('plugins_loaded', 'wsh_setup_content_filters');
+add_action('plugins_loaded', 'wsh_setup_content_filters', 11);
 
 /* 
  * WordPress can also mangle code when initializing the post/page editor.

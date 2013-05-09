@@ -54,7 +54,7 @@ function wsh_extract_exclusions($text, $keep_tags = false){
 			$text = substr_replace($text, $replacement, $start, 
 				$fin+strlen($end_tag)-$start
 			);
-			
+
 			//Have we reached the end of the string yet?
 			if ($start + strlen($replacement) > strlen($text)) break;
 			
@@ -77,24 +77,41 @@ function wsh_extract_exclusions($text, $keep_tags = false){
 function wsh_insert_exclusions($text, $placeholder_callback = 'wsh_insertion_callback'){
 	global $wsh_raw_parts;
 	if(!isset($wsh_raw_parts)) return $text;
-	return preg_replace_callback("/(<p>)?!RAWBLOCK(?P<index>\d+?)!(\s*?<\/p>)?/", $placeholder_callback, $text);
+	return preg_replace_callback('/(<p>)?!RAWBLOCK(?P<index>\d+?)!(\s*?<\/p>)?/', $placeholder_callback, $text);
+}
+
+/**
+ * Get the original content associated with a placeholder.
+ *
+ * @param array $matches Regex matches for a specific placeholder. @see wsh_insert_exclusions()
+ * @return string Original content.
+ */
+function wsh_get_block_from_matches($matches) {
+	global $wsh_raw_parts;
+
+	if ( isset($matches['index']) ) {
+		$index = $matches['index'];
+	} else if ( isset($matches[2]) ) {
+		$index = $matches[2];
+	} else {
+		return '{Invalid RAW block}';
+	}
+
+	$index = intval($index);
+	return $wsh_raw_parts[$index];
 }
 
 /**
  * Regex callback for wsh_insert_exclusions. Returns the extracted content 
  * corresponding to a matched placeholder.
  * 
- * @global $wsh_raw_parts
- * 
  * @param array $matches Regex matches.
  * @return string Replacement string for this match.
  */
 function wsh_insertion_callback($matches){
-	global $wsh_raw_parts;
-
 	$openingParagraph = isset($matches[1]) ? $matches[1] : '';
 	$closingParagraph = isset($matches[3]) ? $matches[3] : '';
-	$code = $wsh_raw_parts[intval($matches['index'])];
+	$code = wsh_get_block_from_matches($matches);
 
 	//If the [raw] block is wrapped in its own paragraph, strip the <p>...</p> tags. If there's
 	//only one of <p>|</p> tag present, keep it - it's probably part of a larger paragraph.
@@ -140,8 +157,8 @@ function wsh_insert_exclusions_for_editor($text){
 }
 
 function wsh_insertion_callback_for_editor($matches){
-	global $wsh_raw_parts;
-	return htmlspecialchars($wsh_raw_parts[intval($matches['index'])], ENT_NOQUOTES);
+	$code = wsh_get_block_from_matches($matches);
+	return htmlspecialchars($code, ENT_NOQUOTES);
 }
 
 add_filter('the_editor_content', 'wsh_extract_exclusions_for_editor', 2);

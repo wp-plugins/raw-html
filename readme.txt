@@ -2,7 +2,7 @@
 Contributors: whiteshadow
 Tags: posts, formatting, javascript, html, css, code, disable
 Requires at least: 2.8
-Tested up to: 3.7.1
+Tested up to: 3.9-alpha
 Stable tag: 1.4.10
 
 Lets you use raw HTML or any other code in your posts. You can also disable smart quotes and other automatic formatting on a per-post basis.
@@ -15,7 +15,7 @@ Lets you disable automatic formatting like smart quotes and automatic paragraph 
 
 With this plugin, you can wrap any part of your post in [raw]...[/raw] tags to prevent WordPress from converting newlines to HTML paragraphs, replacing apostrophes with typographic quotes and so on. This is very useful if you need to add a CSS block or JavaScript to your post.
 
-RawHTML will also add new checkboxes to the "Edit Post" screen that let you disable certain WP filters on a per-post basis. This way you can : 
+RawHTML will also add new checkboxes to the "Edit Post" screen that let you disable certain WP filters on a per-post basis. This way you can: 
 
 * Disable wptexturize (the function that creates smart quotes and other typographic characters).
 * Disable automatic paragraph creation.
@@ -30,13 +30,13 @@ To prevent a part of your post or page from being filtered by WordPress, switch 
 
 *Example :*
 
-`<!--raw-->
+`[raw]
 This 
 
 is 
 
 a "test"!
-<!--/raw-->`
+[/raw]`
 
 In this case, the tags will prevent WordPress from inserting paragraph breaks between "This", "is" and "a "test"", as well as ensure that the double quotes arround "test" are not converted to typographic (curly) quotes.
 
@@ -71,6 +71,10 @@ Open to the post editor and click the "Screen Options" button in the top-right p
 
 
 == Changelog ==
+
+= 1.4.11 =
+* Tested up to WP 3.9-alpha.
+* Fixed a minor conflict with plugins/themes that run custom queries and then manually apply "the_content" filter to post content.
 
 = 1.4.10 =
 * Fixed a rare bug where all [raw]...[/raw] blocks in a post would be replaced with the content of the first block.

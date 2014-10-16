@@ -72,6 +72,9 @@ Open to the post editor and click the "Screen Options" button in the top-right p
 
 == Changelog ==
 
+= 1.4.13 = 
+* Tested with WP 4.0.
+
 = 1.4.12 =
 * Tested with the release version of WP 3.9.
 

@@ -3,7 +3,7 @@ Contributors: whiteshadow
 Tags: posts, formatting, javascript, html, css, code, disable
 Requires at least: 2.8
 Tested up to: 4.0
-Stable tag: 1.4.12
+Stable tag: 1.4.13
 
 Lets you use raw HTML or any other code in your posts. You can also disable smart quotes and other automatic formatting on a per-post basis.
 

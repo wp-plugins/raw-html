@@ -9,7 +9,7 @@ require 'screen-options/screen-options.php';
 //Apply function $func to $content unless it's been disabled for the current post 
 function maybe_use_filter($func, $content){
 	global $post;
-	if ( !isset($post) ) {
+	if ( !isset($post, $post->ID) ) {
 		return $func($content);
 	}
 

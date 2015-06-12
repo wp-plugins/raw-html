@@ -1,6 +1,6 @@
 <?php
 
-if ( !class_exists('wsScreenOptions12') ):
+if ( !class_exists('wsScreenOptions14') ):
 
 /**
  * Class for adding new panels to the "Screen Options" box.
@@ -8,13 +8,13 @@ if ( !class_exists('wsScreenOptions12') ):
  * Do not access this class directly. Instead, use the add_screen_options_panel() function. 
  * 
  * @author Janis Elsts
- * @copyright 2010
- * @version 1.2
+ * @copyright 2015
+ * @version 1.4
  * @access public
  */
-class wsScreenOptions12 {
-	var $registered_panels; //List of custom "Screen Options" panels
-	var $page_panels;       //Index of panels registered for each page ($page => array of panel ids).
+class wsScreenOptions14 {
+	protected $registered_panels; //List of custom "Screen Options" panels
+	protected $page_panels;       //Index of panels registered for each page ($page => array of panel ids).
 	
 	/**
 	 * Class constructor
@@ -24,10 +24,11 @@ class wsScreenOptions12 {
 	function init(){
 		$this->registered_panels = array();
 		$this->page_panels = array();
-		
-		add_filter('screen_settings', array(&$this, 'append_screen_settings'), 10, 2);
-		add_action('admin_print_scripts', array(&$this, 'add_autosave_script'));
-	} 
+
+		add_action('current_screen', array($this, 'populate_page_panels'));
+		add_filter('screen_settings', array($this, 'append_screen_settings'), 10, 2);
+		add_action('admin_print_scripts', array($this, 'add_autosave_script'));
+	}
 
 	/**
 	 * Add a new settings panel to the "Screen Options" box.
@@ -37,38 +38,53 @@ class wsScreenOptions12 {
 	 * @param callback $callback Function that fills the panel with the desired content. Should return its output.
 	 * @param string|array $page The page(s) on which to show the panel (similar to add_meta_box()).
 	 * @param callback $save_callback Optional. Function that saves the settings.
-	 * @param bool $autosave Optional. If se, settings will be automatically saved (via AJAX) when the value of any input element in the panel changes. Defaults to false.
+	 * @param bool $autosave Optional. If set, settings will be automatically saved (via AJAX) when the value of any input element in the panel changes. Defaults to false.
 	 * @return void
 	 */
 	function add_screen_options_panel($id, $title, $callback, $page, $save_callback = null, $autosave = false){
 		if ( !is_array($page) ){
 			$page = array($page);
 		}
-		//Convert page hooks/slugs to screen IDs
-		$page = array_map(array(&$this, 'page_to_screen_id'), $page);
-		$page = array_unique($page);
-		
+
 		$new_panel = array(
 			'title' => $title,
 			'callback' => $callback,
-			'page' => $page, 
+			'page' => $page,
 			'save_callback' => $save_callback,
 			'autosave' => $autosave,
 		);
-		
-		if ( $save_callback ){
-			add_action('wp_ajax_save_settings-' . $id, array(&$this, 'ajax_save_callback'));
-		}
-		
-		//Store the panel ID in each relevant page's list
-		foreach($page as $page_id){
-			if ( !isset($this->page_panels[$page_id]) ){
-				$this->page_panels[$page_id] = array();
-			}
-			$this->page_panels[$page_id][] = $id;
-		}
-		
 		$this->registered_panels[$id] = $new_panel;
+
+		if ( $save_callback ){
+			add_action('wp_ajax_save_settings-' . $id, array($this, 'ajax_save_callback'));
+		}
+	}
+
+	/**
+	 * Populate a lookup table for screen -> panels queries.
+	 *
+	 * This is a callback for the "current_screen" action. We have to do it in this hook or WordPress will
+	 * complain about "doing it wrong" and incorrectly suggest using the "add_meta_boxes" action.
+	 *
+	 * "add_meta_boxes" doesn't work here because it only gets called on CPT pages and we want the ability
+	 * to add screen options to any page.
+	 */
+	function populate_page_panels() {
+		foreach($this->registered_panels as $id => $panel) {
+			$page = $panel['page'];
+
+			//Convert page hooks/slugs to screen IDs
+			$page = array_map(array($this, 'page_to_screen_id'), $page);
+			$page = array_unique($page);
+
+			//Store the panel ID in each relevant page's list
+			foreach($page as $page_id){
+				if ( !isset($this->page_panels[$page_id]) ){
+					$this->page_panels[$page_id] = array();
+				}
+				$this->page_panels[$page_id][] = $id;
+			}
+		}
 	}
 	
 	/**
@@ -81,7 +97,7 @@ class wsScreenOptions12 {
 	 * @return string
 	 */
 	function page_to_screen_id($page){
-		if ( function_exists('convert_to_screen') ){
+		if ( function_exists('convert_to_screen') && class_exists('WP_Screen') ){
 			$screen = convert_to_screen($page);
 			if ( isset($screen->id) ){
 				return $screen->id;
@@ -243,7 +259,7 @@ global $ws_screen_options_versions;
 if ( !isset($ws_screen_options_versions) ){
 	$ws_screen_options_versions = array();
 }
-$ws_screen_options_versions['1.2'] = 'wsScreenOptions12';
+$ws_screen_options_versions['1.4'] = 'wsScreenOptions14';
 
 endif;
 
@@ -252,7 +268,7 @@ if ( !function_exists('add_screen_options_panel') ){
 	/**
 	 * Add a new settings panel to the "Screen Options" box.
 	 * 
-	 * @see wsScreenOptions10::add_screen_options_panel()
+	 * @see wsScreenOptions14::add_screen_options_panel()
 	 * 
 	 * @param string $id String to use in the 'id' attribute of the settings panel. Should be unique.
 	 * @param string $title Title of the settings panel. Set to an empty string to omit title. 
@@ -265,7 +281,7 @@ if ( !function_exists('add_screen_options_panel') ){
 	function add_screen_options_panel($id, $title, $callback, $page, $save_callback = null, $autosave = false){
 		global $ws_screen_options_versions;
 		
-		static $instance = null;
+		static $instance = null; /** @var wsScreenOptions14 $instance */
 		if ( is_null($instance) ){
 			//Instantiate the latest version of the wsScreenOptions class
 			uksort($ws_screen_options_versions, 'version_compare');
@@ -274,9 +290,8 @@ if ( !function_exists('add_screen_options_panel') ){
 			$instance->init();
 		}
 		
-		return $instance->add_screen_options_panel($id, $title, $callback, $page, $save_callback, $autosave);
+		$instance->add_screen_options_panel($id, $title, $callback, $page, $save_callback, $autosave);
 	}
 	
 }    
 
-?>
